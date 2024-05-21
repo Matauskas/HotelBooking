@@ -1,27 +1,56 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Logging;
 
 [ApiController]
 [Route("api/[controller]")]
 public class BookingsController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<BookingsController> _logger;
 
-    public BookingsController(ApplicationDbContext context)
+    public BookingsController(ApplicationDbContext context, ILogger<BookingsController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetBookings()
     {
-        return Ok(await _context.Bookings.Include(b => b.Hotel).ToListAsync());
+        try
+        {
+            var bookings = await _context.Bookings.Include(b => b.Hotel).ToListAsync();
+            return Ok(bookings);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching bookings.");
+            return StatusCode(500, "Internal server error");
+        }
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateBooking([FromBody] Booking booking)
+  [HttpPost]
+public async Task<IActionResult> CreateBooking([FromBody] BookingRequestDto bookingRequest)
+{
+    try
     {
+        if (!ModelState.IsValid)
+        {
+            var modelStateErrors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+            _logger.LogError("Invalid model state for CreateBooking: {ModelStateErrors}", string.Join(", ", modelStateErrors));
+            return BadRequest(ModelState);
+        }
+
+        var booking = new Booking
+        {
+            HotelId = bookingRequest.HotelId,
+            RoomType = bookingRequest.RoomType,
+            Nights = bookingRequest.Nights,
+            BreakfastIncluded = bookingRequest.BreakfastIncluded,
+            NumberOfPersons = bookingRequest.NumberOfPersons
+        };
+
         decimal roomRate = booking.RoomType switch
         {
             "Standard" => 100,
@@ -39,4 +68,13 @@ public class BookingsController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(booking);
     }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error creating booking.");
+        return StatusCode(500, "Internal server error");
+    }
+}
+
+
+
 }

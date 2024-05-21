@@ -1,12 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-public class Booking
+public class BookingRequestDto
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-    
     [Required]
     public int HotelId { get; set; }
 
@@ -23,8 +18,4 @@ public class Booking
     [Required]
     [Range(1, int.MaxValue, ErrorMessage = "Number of persons must be at least 1")]
     public int NumberOfPersons { get; set; }
-
-    public decimal TotalCost { get; set; }
-
-    public Hotel Hotel { get; set; }
 }
