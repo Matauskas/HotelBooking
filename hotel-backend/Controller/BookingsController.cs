@@ -35,12 +35,6 @@ public async Task<IActionResult> CreateBooking([FromBody] BookingRequestDto book
 {
     try
     {
-        if (!ModelState.IsValid)
-        {
-            var modelStateErrors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-            _logger.LogError("Invalid model state for CreateBooking: {ModelStateErrors}", string.Join(", ", modelStateErrors));
-            return BadRequest(ModelState);
-        }
 
         var booking = new Booking
         {

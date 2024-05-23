@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HotelList from './components/HotelList';
-import BookingForm from './components/BookingForm';
-import BookingsList from './components/BookingList';
+import HotelList from './pages/HotelList';
+import BookingForm from './pages/BookingForm';
+import BookingsList from './pages/BookingList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
