@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 public class ApplicationDbContext : DbContext
 {
-    private readonly ILogger<ApplicationDbContext> _logger;
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ILogger<ApplicationDbContext> logger) : base(options)
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        _logger = logger;
+
     }
 
     public DbSet<Hotel> Hotels { get; set; }
@@ -14,7 +14,7 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        _logger.LogInformation("Seeding initial data...");
+
 
        
         modelBuilder.Entity<Hotel>().HasData(
@@ -28,6 +28,5 @@ public class ApplicationDbContext : DbContext
        
         modelBuilder.Entity<Booking>().HasData(new Booking[0]);
 
-        _logger.LogInformation("Seeding completed.");
     }
 }
