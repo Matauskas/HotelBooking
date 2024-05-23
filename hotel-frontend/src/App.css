@@ -59,7 +59,7 @@ body {
   margin-bottom: 15px;
 }
 .custom-navbar {
-  background-color: #004080 !important; /* Dark blue color */
+  background-color: #004080 !important;
 }
 
 .custom-navbar .navbar-brand,
@@ -67,12 +67,18 @@ body {
   color: white !important;
 }
 .sticky-search-bar {
-  position: -webkit-sticky; /* For Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 1000; /* Ensures it stays above other content */
-  background-color: white; /* Ensure the background is not transparent */
-  padding: 10px 0; /* Optional: add some padding */
-  border-bottom: 1px solid #ddd; /* Optional: add a bottom border */
+  z-index: 1000; 
+  background-color: white; 
+  padding: 10px 0; 
+  border-bottom: 1px solid #ddd; 
 }
-
+.custom-card-img {
+  width: 150px;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}

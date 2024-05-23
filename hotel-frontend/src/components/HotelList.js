@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Container, Row, Col, Navbar, Nav, Modal } from 'react-bootstrap';
-import { TextField, Typography } from '@mui/material';
-import BookingForm from './BookingForm'; // Import the BookingForm component
+import { TextField } from '@mui/material';
+import BookingForm from './BookingForm';
 
 const HotelList = () => {
     const [hotels, setHotels] = useState([]);
@@ -63,7 +63,7 @@ const HotelList = () => {
                     {hotels.map(hotel => (
                         <Col md={4} key={hotel.id} className="d-flex align-items-stretch mb-4">
                             <Card onClick={() => handleHotelClick(hotel.id)} className="w-100">
-                                <Card.Img variant="top" src={hotel.pictureUrl} alt={hotel.name} />
+                                <Card.Img variant="top" src={hotel.pictureUrl} alt={hotel.name} className="custom-card-img" />
                                 <Card.Body>
                                     <Card.Title>{hotel.name}</Card.Title>
                                     <Card.Text>{hotel.location}</Card.Text>
@@ -74,7 +74,6 @@ const HotelList = () => {
                 </Row>
             </Container>
 
-            {/* Booking Form Modal */}
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Book a Room</Modal.Title>
@@ -88,3 +87,4 @@ const HotelList = () => {
 };
 
 export default HotelList;
+

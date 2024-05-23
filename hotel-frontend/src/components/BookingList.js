@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Card, Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import { Typography } from '@mui/material';
 
-//TODO SEARCH BAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 const BookingsList = () => {
     const [bookings, setBookings] = useState([]);
@@ -30,7 +30,7 @@ const BookingsList = () => {
                     {bookings.map(booking => (
                         <Col md={4} key={booking.id} className="d-flex align-items-stretch mb-4">
                             <Card className="w-100">
-                                <Card.Img variant="top" src={booking.hotel.pictureUrl} alt={booking.hotel.name} />
+                                <Card.Img variant="top" src={booking.hotel.pictureUrl} alt={booking.hotel.name} className="custom-card-img" />
                                 <Card.Body>
                                     <Card.Title>{booking.hotel.name}</Card.Title>
                                     <Card.Text>

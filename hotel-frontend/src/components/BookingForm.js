@@ -9,6 +9,7 @@ const BookingForm = ({ hotelId, onClose }) => {
     const [nights, setNights] = useState(1);
     const [breakfastIncluded, setBreakfastIncluded] = useState(false);
     const [numberOfPersons, setNumberOfPersons] = useState(1);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         axios.get(`http://localhost:5248/api/hotels/${hotelId}`)
@@ -18,6 +19,13 @@ const BookingForm = ({ hotelId, onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
+
+        if (nights <= 0 || numberOfPersons <= 0) {
+            setError('Nights and Number of Persons must be greater than 0.');
+            return;
+        }
+
         const bookingRequest = {
             hotelId: parseInt(hotelId),
             roomType,
@@ -67,6 +75,7 @@ const BookingForm = ({ hotelId, onClose }) => {
                             label="Nights" 
                             value={nights} 
                             onChange={(e) => setNights(e.target.value)} 
+                            inputProps={{ min: 1 }}
                             fullWidth
                         />
                     </Col>
@@ -86,10 +95,18 @@ const BookingForm = ({ hotelId, onClose }) => {
                             label="Number of Persons" 
                             value={numberOfPersons} 
                             onChange={(e) => setNumberOfPersons(e.target.value)} 
+                            inputProps={{ min: 1 }}
                             fullWidth
                         />
                     </Col>
                 </Row>
+                {error && (
+                    <Row className="mb-3">
+                        <Col>
+                            <Typography color="error">{error}</Typography>
+                        </Col>
+                    </Row>
+                )}
                 <Row>
                     <Col>
                         <Button type="submit" variant="contained" color="primary">Book</Button>
